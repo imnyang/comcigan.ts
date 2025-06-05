@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/star0202/comcigan.ts"
+    "url": "git+https://github.com/imnyang/comcigan.ts"
   },
   "scripts": {
     "build": "rimraf dist && tsc",
