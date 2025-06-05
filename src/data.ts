@@ -11,6 +11,7 @@ interface Data {
   originalCode: string
   dayCode: string
   subjectCode: string
+  nextWeek: boolean
 }
 
 export default class DataManager {
@@ -54,6 +55,7 @@ export default class DataManager {
       originalCode: original[0],
       dayCode: day[0],
       subjectCode: subject[0],
+      nextWeek: false,
     }
     return this._data
   }

@@ -45,10 +45,11 @@ export default class Comcigan {
       originalCode,
       dayCode,
       subjectCode,
+      nextWeek,
     } = await this.dataManager.getData()
     const res = await this.http
       .get(
-        `${mainRoute}_T?${encodeBase64(`${timetableRoute}_${schoolCode}_0_1`)}`,
+      `${mainRoute}_T?${encodeBase64(`${timetableRoute}_${schoolCode}_0_${nextWeek ? 2 : 1}`)}`,
       )
       .then((res) => res.body.text())
     const data = parseResponse(res)
