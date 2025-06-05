@@ -38,4 +38,5 @@ jobs:
       - name: Release with semantic-release to GitHub Packages only
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release
