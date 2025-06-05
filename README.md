@@ -1,5 +1,7 @@
 # comcigan.ts
 
+포크 참조
+
 [![npm version](https://img.shields.io/npm/v/comcigan.ts?style=flat-square)](https://www.npmjs.com/package/comcigan.ts)
 ![License](https://img.shields.io/github/license/star0202/comcigan.ts?style=flat-square)
 
