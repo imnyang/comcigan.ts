@@ -1,5 +1,5 @@
 {
-  "name": "comcigan.ts",
+  "name": "@imnyang/comcigan.ts",
   "version": "0.0.0-development",
   "description": "A Comcigan parser written in TypeScript",
   "main": "dist/index.js",
