@@ -33,8 +33,15 @@ export default class School extends Fetcher implements ISchool {
   }
 
   async getTimetable(nextWeek?: boolean): Promise<Timetable[][][][]>
-  async getTimetable(grade: number, nextWeek?: boolean): Promise<Timetable[][][]>
-  async getTimetable(grade: number, cls: number, nextWeek?: boolean): Promise<Timetable[][]>
+  async getTimetable(
+    grade: number,
+    nextWeek?: boolean,
+  ): Promise<Timetable[][][]>
+  async getTimetable(
+    grade: number,
+    cls: number,
+    nextWeek?: boolean,
+  ): Promise<Timetable[][]>
   async getTimetable(
     grade: number,
     cls: number,
@@ -84,12 +91,21 @@ export default class School extends Fetcher implements ISchool {
       }
     }
 
-    if (grade === undefined) return this.client.getTimetable(this.code, isNextWeek)
-    if (cls === undefined) return this.client.getTimetable(this.code, grade, isNextWeek)
+    if (grade === undefined)
+      return this.client.getTimetable(this.code, isNextWeek)
+    if (cls === undefined)
+      return this.client.getTimetable(this.code, grade, isNextWeek)
     if (day === undefined)
       return this.client.getTimetable(this.code, grade, cls, isNextWeek)
     if (period === undefined)
       return this.client.getTimetable(this.code, grade, cls, day, isNextWeek)
-    return this.client.getTimetable(this.code, grade, cls, day, period, isNextWeek)
+    return this.client.getTimetable(
+      this.code,
+      grade,
+      cls,
+      day,
+      period,
+      isNextWeek,
+    )
   }
 }

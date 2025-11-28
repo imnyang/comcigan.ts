@@ -88,7 +88,10 @@ export default class Comcigan {
     )
   }
 
-  async getTimetable(schoolCode: number, nextWeek?: boolean): Promise<Timetable[][][][]>
+  async getTimetable(
+    schoolCode: number,
+    nextWeek?: boolean,
+  ): Promise<Timetable[][][][]>
   async getTimetable(
     schoolCode: number,
     grade: number,
