@@ -26,6 +26,6 @@ jobs:
       - name: Clear auth token for OIDC
         run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
       - name: Install Dependencies
-        run: npm i --frozen-lockfile
+        run: pnpm i --frozen-lockfile
       - name: release
-        run: npm publish --verbose
+        run: pnpm publish --verbose
