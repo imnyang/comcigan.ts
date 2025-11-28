@@ -37,6 +37,7 @@ export default class Comcigan {
 
   private async getRawTimetable(
     schoolCode: number,
+    nextWeek = false,
   ): Promise<Timetable[][][][]> {
     const {
       mainRoute,
@@ -45,11 +46,10 @@ export default class Comcigan {
       originalCode,
       dayCode,
       subjectCode,
-      nextWeek,
     } = await this.dataManager.getData()
     const res = await this.http
       .get(
-      `${mainRoute}_T?${encodeBase64(`${timetableRoute}_${schoolCode}_0_${nextWeek ? 2 : 1}`)}`,
+        `${mainRoute}_T?${encodeBase64(`${timetableRoute}_${schoolCode}_0_${nextWeek ? 2 : 1}`)}`,
       )
       .then((res) => res.body.text())
     const data = parseResponse(res)
@@ -88,21 +88,24 @@ export default class Comcigan {
     )
   }
 
-  async getTimetable(schoolCode: number): Promise<Timetable[][][][]>
+  async getTimetable(schoolCode: number, nextWeek?: boolean): Promise<Timetable[][][][]>
   async getTimetable(
     schoolCode: number,
     grade: number,
+    nextWeek?: boolean,
   ): Promise<Timetable[][][]>
   async getTimetable(
     schoolCode: number,
     grade: number,
     cls: number,
+    nextWeek?: boolean,
   ): Promise<Timetable[][]>
   async getTimetable(
     schoolCode: number,
     grade: number,
     cls: number,
     day: number,
+    nextWeek?: boolean,
   ): Promise<Timetable[]>
   async getTimetable(
     schoolCode: number,
@@ -110,16 +113,46 @@ export default class Comcigan {
     cls: number,
     day: number,
     period: number,
+    nextWeek?: boolean,
   ): Promise<Timetable>
   /** 학교 코드를 이용해 학교 시간표를 불러옵니다. */
   async getTimetable(
     schoolCode: number,
-    grade?: number,
-    cls?: number,
-    day?: number,
-    period?: number,
+    gradeOrNextWeek?: number | boolean,
+    clsOrNextWeek?: number | boolean,
+    dayOrNextWeek?: number | boolean,
+    periodOrNextWeek?: number | boolean,
+    nextWeek = false,
   ) {
-    const raw = await this.getRawTimetable(schoolCode)
+    // Parse arguments
+    let grade: number | undefined
+    let cls: number | undefined
+    let day: number | undefined
+    let period: number | undefined
+    let isNextWeek = nextWeek
+
+    if (typeof gradeOrNextWeek === 'boolean') {
+      isNextWeek = gradeOrNextWeek
+    } else {
+      grade = gradeOrNextWeek
+      if (typeof clsOrNextWeek === 'boolean') {
+        isNextWeek = clsOrNextWeek
+      } else {
+        cls = clsOrNextWeek
+        if (typeof dayOrNextWeek === 'boolean') {
+          isNextWeek = dayOrNextWeek
+        } else {
+          day = dayOrNextWeek
+          if (typeof periodOrNextWeek === 'boolean') {
+            isNextWeek = periodOrNextWeek
+          } else {
+            period = periodOrNextWeek
+          }
+        }
+      }
+    }
+
+    const raw = await this.getRawTimetable(schoolCode, isNextWeek)
 
     if (grade === undefined) return raw
     if (cls === undefined) return raw[grade - 1]

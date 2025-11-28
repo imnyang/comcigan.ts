@@ -32,33 +32,64 @@ export default class School extends Fetcher implements ISchool {
     return res[0]
   }
 
-  async getTimetable(): Promise<Timetable[][][][]>
-  async getTimetable(grade: number): Promise<Timetable[][][]>
-  async getTimetable(grade: number, cls: number): Promise<Timetable[][]>
+  async getTimetable(nextWeek?: boolean): Promise<Timetable[][][][]>
+  async getTimetable(grade: number, nextWeek?: boolean): Promise<Timetable[][][]>
+  async getTimetable(grade: number, cls: number, nextWeek?: boolean): Promise<Timetable[][]>
   async getTimetable(
     grade: number,
     cls: number,
     day: number,
+    nextWeek?: boolean,
   ): Promise<Timetable[]>
   async getTimetable(
     grade: number,
     cls: number,
     day: number,
     period: number,
+    nextWeek?: boolean,
   ): Promise<Timetable>
   /** 시간표를 불러옵니다. */
   async getTimetable(
-    grade?: number,
-    cls?: number,
-    day?: number,
-    period?: number,
+    gradeOrNextWeek?: number | boolean,
+    clsOrNextWeek?: number | boolean,
+    dayOrNextWeek?: number | boolean,
+    periodOrNextWeek?: number | boolean,
+    nextWeek = false,
   ) {
-    if (grade === undefined) return this.client.getTimetable(this.code)
-    if (cls === undefined) return this.client.getTimetable(this.code, grade)
+    // Parse arguments
+    let grade: number | undefined
+    let cls: number | undefined
+    let day: number | undefined
+    let period: number | undefined
+    let isNextWeek = nextWeek
+
+    if (typeof gradeOrNextWeek === 'boolean') {
+      isNextWeek = gradeOrNextWeek
+    } else {
+      grade = gradeOrNextWeek
+      if (typeof clsOrNextWeek === 'boolean') {
+        isNextWeek = clsOrNextWeek
+      } else {
+        cls = clsOrNextWeek
+        if (typeof dayOrNextWeek === 'boolean') {
+          isNextWeek = dayOrNextWeek
+        } else {
+          day = dayOrNextWeek
+          if (typeof periodOrNextWeek === 'boolean') {
+            isNextWeek = periodOrNextWeek
+          } else {
+            period = periodOrNextWeek
+          }
+        }
+      }
+    }
+
+    if (grade === undefined) return this.client.getTimetable(this.code, isNextWeek)
+    if (cls === undefined) return this.client.getTimetable(this.code, grade, isNextWeek)
     if (day === undefined)
-      return this.client.getTimetable(this.code, grade, cls)
+      return this.client.getTimetable(this.code, grade, cls, isNextWeek)
     if (period === undefined)
-      return this.client.getTimetable(this.code, grade, cls, day)
-    return this.client.getTimetable(this.code, grade, cls, day, period)
+      return this.client.getTimetable(this.code, grade, cls, day, isNextWeek)
+    return this.client.getTimetable(this.code, grade, cls, day, period, isNextWeek)
   }
 }
