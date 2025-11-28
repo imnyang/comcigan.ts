@@ -5,20 +5,27 @@ on:
     branches:
       - release
 
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         uses: actions/checkout@v6
-      # - name: Setup pnpm
-      #   uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
       - name: Setup node.js 20
         uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'npm'
+      - name: Clear auth token for OIDC
+        run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
       - name: Install Dependencies
-        run: npm i --frozen-lockfile
+        run: pnpm i --frozen-lockfile
       - name: release
-        run: npm publish --verbose
+        run: pnpm publish --verbose
