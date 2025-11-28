@@ -1,6 +1,6 @@
 # comcigan.ts
 
-포크 참조
+[star0202](https://github.com/star0202)님의 [comcigan.ts](https://github.com/star0202/comcigan.ts)를 기반으로 합니다.
 
 [![npm version](https://img.shields.io/npm/v/comcigan.ts?style=flat-square)](https://www.npmjs.com/package/comcigan.ts)
 ![License](https://img.shields.io/github/license/star0202/comcigan.ts?style=flat-square)
