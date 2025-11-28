@@ -9,3 +9,4 @@ export const mergeMap = <T, F>(
 
   return result
 }
+
