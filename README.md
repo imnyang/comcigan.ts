@@ -12,9 +12,10 @@
 ## 설치
 
 ```bash
-npm install comcigan.ts  # npm
-yarn add comcigan.ts  # yarn
-pnpm add comcigan.ts  # pnpm
+npm install @imnyang/comcigan.ts  # npm
+yarn add @imnyang/comcigan.ts  # yarn
+pnpm add @imnyang/comcigan.ts  # pnpm
+bun add @imnyang/comcigan.ts
 ```
 
 ## 사용 예시
